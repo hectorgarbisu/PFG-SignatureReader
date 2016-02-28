@@ -27,7 +27,7 @@ public class CanvasPanel extends JPanel {
         super.paintComponent(g);
         g.setColor(Color.GRAY);
         g.drawString("Click and drag to draw", 10, 20);
-        g.drawString("Release left click to save file", 10, 40);
+        g.drawString("Press save to save signature", 10, 40);
         g.drawString("Press right click to delete current figure", 10, 60);
         if (ps != null) {
             g.drawPolyline(ps.getXs(), ps.getYs(), ps.size());

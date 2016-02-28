@@ -14,9 +14,11 @@ public class VectorialDataSample {
     private int[] xs;
     private int[] ys;
     private int period;
-    private int label;
+    private String label = "";
+    private int dim1 = 0;
+    private int dim2 = 0;
     
-    public VectorialDataSample(int period, int label){
+    public VectorialDataSample(int period, String label){
         this.period = period;
         this.points = new ArrayList<Point>();
         this.xs = new int[]{0};
@@ -51,14 +53,27 @@ public class VectorialDataSample {
         this.ys=ys;
         this.xs=xs;   
     }
+    void saveFigure(String label){
+        this.setLabel(label);
+        saveFigure();
+    }
+    void saveFigure(String label,int dim1, int dim2){
+        this.setLabel(label);
+        this.setDimensions(dim1,dim2);
+        saveFigure();
+        
+    }    
     void saveFigure(){
         try {
             File dir = new File("generatedfigures");
             dir.mkdir();
-            File file = File.createTempFile("fig"+label+"-"+period+"ms"+"-",
+            File file = File.createTempFile("fig"+label+"-"+period+"ms"+"-"+dim1+
+                    "x"+dim2+"-",
+                    
                     ".vdsf", dir);
             PrintWriter writer = new PrintWriter(dir+"/"+file.getName(), "UTF-8");
             writer.println(period);
+            writer.println(dim1+" "+dim2);
             writer.println(label);
             for (int i = 0; i < xs.length; i++) {
                 writer.println(xs[i]+" "+ys[i]);
@@ -73,6 +88,15 @@ public class VectorialDataSample {
             Logger.getLogger(VectorialDataSample.class.getName()).log(Level.SEVERE, null, ex);
         }
     
+    }
+
+    private void setLabel(String label) {
+        this.label = label;
+    }
+
+    private void setDimensions(int dim1, int dim2) {
+        this.dim1 = dim1;
+        this.dim2 = dim2;
     }
 
 

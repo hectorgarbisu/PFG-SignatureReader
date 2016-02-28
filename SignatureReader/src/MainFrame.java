@@ -24,11 +24,13 @@ public class MainFrame extends javax.swing.JFrame {
     // mouse swipes
 
     private final int PERIOD = 20; //miliseconds
+    private final int DIM1 = 300;
+    private final int DIM2 = 300;
 
     public MainFrame() {
         initComponents();
         this.vds = new VectorialDataSample(PERIOD,
-                figureSelector.getSelectedIndex());
+                authorField.getText());
     }
 
     /**
@@ -42,7 +44,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         canvasPanel1 = new CanvasPanel();
         controlPanel = new javax.swing.JPanel();
-        figureSelector = new javax.swing.JComboBox();
+        saveButton = new javax.swing.JButton();
+        clearButton = new javax.swing.JButton();
+        authorField = new javax.swing.JTextField();
         canvasPanel2 = new CanvasPanel();
 
         javax.swing.GroupLayout canvasPanel1Layout = new javax.swing.GroupLayout(canvasPanel1);
@@ -59,24 +63,36 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Figure reader");
 
-        figureSelector.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Square", "Circle", "Triangle", "Rectangle", "V", "L", "Z", "N", "S" }));
-        figureSelector.addActionListener(new java.awt.event.ActionListener() {
+        saveButton.setText("Save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                figureSelectorActionPerformed(evt);
+                saveButtonActionPerformed(evt);
             }
         });
+
+        clearButton.setText("Clear");
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
         controlPanelLayout.setHorizontalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(controlPanelLayout.createSequentialGroup()
-                .addComponent(figureSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(authorField, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(saveButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(clearButton)
+                .addContainerGap())
         );
         controlPanelLayout.setVerticalGroup(
             controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(figureSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, controlPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(controlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveButton)
+                    .addComponent(clearButton)
+                    .addComponent(authorField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         canvasPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -121,11 +137,6 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void figureSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_figureSelectorActionPerformed
-        // TODO add your handling code here:
-        clearCanvas();
-    }//GEN-LAST:event_figureSelectorActionPerformed
-
     private void canvasPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_canvasPanel2MousePressed
         // Initialize counter and draw current point
         if (SwingUtilities.isLeftMouseButton(evt)) {
@@ -137,16 +148,20 @@ public class MainFrame extends javax.swing.JFrame {
         // Stops time counter
         timDate.stop();
         if (SwingUtilities.isRightMouseButton(evt)) {
-            //If right clic, it should delete the current figure
+            //If right clic, it should delete the current figure        
             clearCanvas();
         } else if (SwingUtilities.isLeftMouseButton(evt)) {
-            vds.saveFigure();
-            clearCanvas();
+  
         }
     }//GEN-LAST:event_canvasPanel2MouseReleased
 
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        vds.saveFigure(authorField.getText(),DIM1,DIM2);
+        clearCanvas();
+    }//GEN-LAST:event_saveButtonActionPerformed
+
     private void clearCanvas() {
-        vds = new VectorialDataSample(PERIOD,figureSelector.getSelectedIndex());
+        vds = new VectorialDataSample(PERIOD,authorField.getText());
         canvasPanel2.drawVectorialDataSample(vds);
     }
 
@@ -204,10 +219,12 @@ public class MainFrame extends javax.swing.JFrame {
     });
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField authorField;
     private CanvasPanel canvasPanel1;
     private CanvasPanel canvasPanel2;
+    private javax.swing.JButton clearButton;
     private javax.swing.JPanel controlPanel;
-    private javax.swing.JComboBox figureSelector;
+    private javax.swing.JButton saveButton;
     // End of variables declaration//GEN-END:variables
 
 
