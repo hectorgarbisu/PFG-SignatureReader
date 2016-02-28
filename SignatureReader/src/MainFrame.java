@@ -71,6 +71,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         clearButton.setText("Clear");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout controlPanelLayout = new javax.swing.GroupLayout(controlPanel);
         controlPanel.setLayout(controlPanelLayout);
@@ -159,6 +164,10 @@ public class MainFrame extends javax.swing.JFrame {
         vds.saveFigure(authorField.getText(),DIM1,DIM2);
         clearCanvas();
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        clearCanvas();
+    }//GEN-LAST:event_clearButtonActionPerformed
 
     private void clearCanvas() {
         vds = new VectorialDataSample(PERIOD,authorField.getText());
