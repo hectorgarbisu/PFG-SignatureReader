@@ -65,7 +65,7 @@ public class VectorialDataSample {
     }    
     void saveFigure(){
         try {
-            File dir = new File("generatedfigures");
+            File dir = new File("./generatedfigures");
             dir.mkdir();
             File file = File.createTempFile("fig"+label+"-"+period+"ms"+"-"+dim1+
                     "x"+dim2+"-",
